@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <title>DNA de Traços - Protótipo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>DNA de Traços</h1>
+            <p>Protótipo inicial para explorar traços de caráter com sliders simples.</p>
+        </header>
+
+        <main>
+            <section class="sliders">
+                <label>
+                    Oral
+                    <input type="range" min="0" max="100" value="20" data-trait="oral" />
+                </label>
+                <label>
+                    Esquizoide
+                    <input type="range" min="0" max="100" value="20" data-trait="esquizoide" />
+                </label>
+                <label>
+                    Masoquista
+                    <input type="range" min="0" max="100" value="20" data-trait="masoquista" />
+                </label>
+                <label>
+                    Psicopatia
+                    <input type="range" min="0" max="100" value="20" data-trait="psicopatia" />
+                </label>
+                <label>
+                    Rígido
+                    <input type="range" min="0" max="100" value="20" data-trait="rigido" />
+                </label>
+            </section>
+
+            <section class="preview">
+                <h2>Avatar (placeholder)</h2>
+                <div class="avatar"></div>
+                <p id="profile-summary">Perfil geral: 20% para cada traço.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
