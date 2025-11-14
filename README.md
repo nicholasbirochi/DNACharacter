@@ -1,4 +1,4 @@
-# DNA de Traços do Corpo – Avatar Paramétrico V23
+# 🌌 DNA de Traços do Corpo – Avatar Paramétrico V23
 
 Protótipo web que transforma cinco traços de caráter (Oral, Esquizoide, Masoquista, Psicopatia e Rígido) em um avatar 2D paramétrico. O objetivo é demonstrar, de maneira lúdica e visual, como diferentes intensidades desses traços podem alterar a morfologia corporal, a postura e a “expressão energética” do personagem.
 
@@ -6,7 +6,7 @@ Protótipo web que transforma cinco traços de caráter (Oral, Esquizoide, Masoq
 
 ---
 
-## Sumário
+## 🧭 Sumário
 
 1. [Visão geral](#visão-geral)  
 2. [Recursos principais](#recursos-principais)  
@@ -21,31 +21,31 @@ Protótipo web que transforma cinco traços de caráter (Oral, Esquizoide, Masoq
 
 ---
 
-## Visão geral
+## ✨ Visão geral
 
-- Os cinco *sliders* representam os traços de caráter.  
-- Os valores são normalizados para sempre somar **100%** (DNA).  
-- O avatar reage em tempo real: proporções, curvas, ombros, postura e expressão facial mudam à medida que os traços são alterados.  
-- Um resumo textual explica como ficou a combinação final.  
-- Há botões para **Randomizar**, **Resetar** e exportar em **PNG/PDF**.  
-- Um **questionário paramétrico** opcional calcula automaticamente os percentuais.
+- 🎚️ Os cinco *sliders* representam os traços de caráter.  
+- 🔄 Os valores são normalizados para sempre somar **100%** (DNA).  
+- 🕺 O avatar reage em tempo real nas proporções, nas curvas e na expressão facial.  
+- 📝 Um resumo textual explica como ficou a combinação final.  
+- 🎲 Há botões para **Randomizar**, **Resetar** e exportar em **PNG/PDF**.  
+- 🧪 Um **questionário paramétrico** opcional calcula automaticamente os percentuais.
 
 Trata-se de um protótipo artístico interpretativo; não substitui avaliações clínicas ou psicológicas.
 
 ---
 
-## Recursos principais
+## 🚀 Recursos principais
 
-- **Motor paramétrico em JavaScript** que calcula proporções (altura, largura do tronco, quadril, espessura de membros e formato da cabeça) com base na mistura dos traços.  
-- **UI responsiva** em CSS puro com tema escuro, animações sutis e foco em leitura confortável.  
-- **Resumo textual dinâmico** destacando as porcentagens de cada traço.  
-- **Ferramentas de exportação** via `html2canvas` e `jsPDF` para gerar imagens ou PDFs do avatar configurado.  
-- **Questionário configurável** (10, 20 ou 50 perguntas) para estimar automaticamente o DNA de traços.  
-- **Painel de contato e sobre** com informações do profissional que apresenta o protótipo.
+- ⚙️ **Motor paramétrico em JavaScript** calcula proporções (altura, tronco, quadril, membros e cabeça) conforme a mescla de traços.  
+- 🖥️ **UI responsiva** em CSS puro com tema neon, animações sutis e leitura confortável.  
+- 📊 **Resumo textual dinâmico** destaca as porcentagens em tempo real.  
+- 💾 **Exportação rápida** via `html2canvas` e `jsPDF` para gerar PNGs ou PDFs.  
+- 🧠 **Questionário configurável** (10, 20 ou 50 perguntas) estima automaticamente o DNA de traços.  
+- 📇 **Painel de contato e sobre** contextualiza o protótipo no portfólio.
 
 ---
 
-## Mapa corporal por traço
+## 🧍‍♂️ Mapa corporal por traço
 
 | Traço        | Tendência visual | Significado simbólico |
 |--------------|-----------------|-----------------------|
@@ -59,7 +59,7 @@ Os efeitos podem se combinar (ex.: Oral + Rígido → tronco arredondado com pos
 
 ---
 
-## Fluxo rápido de uso
+## ⚡ Fluxo rápido de uso
 
 1. Ajuste os *sliders* laterais até obter a distribuição desejada.  
 2. Observe o avatar reagir instantaneamente (há animação “breathing” suave).  
@@ -69,7 +69,7 @@ Os efeitos podem se combinar (ex.: Oral + Rígido → tronco arredondado com pos
 
 ---
 
-## Exportações e questionário
+## 🧾 Exportações e questionário
 
 - **PNG**: usa `html2canvas` para rasterizar o contêiner do avatar em 1080×1080px.  
 - **PDF**: usa `jsPDF` para gerar um documento em A4 contendo avatar + resumo textual.  
@@ -81,7 +81,7 @@ Os efeitos podem se combinar (ex.: Oral + Rígido → tronco arredondado com pos
 
 ---
 
-## Tecnologias e estrutura
+## 🧱 Tecnologias e estrutura
 
 - **HTML5** (`index.html`): layout principal (avatar, sliders, questionário, contato).  
 - **CSS3** (`style.css`): tema, responsividade, grid principal, efeitos visuais do avatar.  
@@ -93,7 +93,7 @@ Não há frameworks, bundlers ou dependências externas além das libs CDN para 
 
 ---
 
-## Como executar localmente
+## 💻 Como executar localmente
 
 1. Faça download ou clone os arquivos deste diretório.  
 2. Certifique-se de manter `index.html`, `style.css`, `script.js`, `README.md` e `COMMIT_HISTORY.md` na mesma pasta.  
@@ -105,7 +105,7 @@ Não há frameworks, bundlers ou dependências externas além das libs CDN para 
 
 ---
 
-## Personalização rápida
+## 🎨 Personalização rápida
 
 - **Cores dos traços**: altere as CSS custom properties no `:root`.  
 - **Resposta corporal**: ajuste as fórmulas em `applyTraitsToBody()` no `script.js`.  
@@ -115,7 +115,7 @@ Não há frameworks, bundlers ou dependências externas além das libs CDN para 
 
 ---
 
-## Roadmap sugerido
+## 🛣️ Roadmap sugerido
 
 - Adicionar “presets” salvos (JSON) para compartilhar combinações específicas.  
 - Incluir barra temporal para animar uma evolução de traços.  
@@ -125,7 +125,7 @@ Não há frameworks, bundlers ou dependências externas além das libs CDN para 
 
 ---
 
-## Contato
+## 🤝 Contato
 
 - **Nome:** Nicholas Birochi  
 - **Localização:** São Bernardo do Campo, SP · Brasil  
