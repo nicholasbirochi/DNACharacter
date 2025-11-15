@@ -2,49 +2,203 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
-    <title>DNA de Traços - Protótipo</title>
+    <title>Traços de Caráter – Avatar Paramétrico V23</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <div class="app">
-        <header>
-            <h1>DNA de Traços</h1>
-            <p>Protótipo inicial para explorar traços de caráter com sliders simples.</p>
+        <header class="app-header">
+            <h1>Traços de Caráter</h1>
+            <p>
+                Ajuste os 5 traços e veja o avatar responder em corpo, postura e expressão (modelo paramétrico de traços).</br>
+                Projeto visual de “traços de caráter”, inspirado em corpo-psicologia e usado aqui como protótipo lúdico
+                para experimentação com perfis de personalidade e morfologia do avatar.
+            </p>
         </header>
 
-        <main>
-            <section class="sliders">
-                <label>
-                    Oral
-                    <input type="range" min="0" max="100" value="20" data-trait="oral" />
-                </label>
-                <label>
-                    Esquizoide
-                    <input type="range" min="0" max="100" value="20" data-trait="esquizoide" />
-                </label>
-                <label>
-                    Masoquista
-                    <input type="range" min="0" max="100" value="20" data-trait="masoquista" />
-                </label>
-                <label>
-                    Psicopatia
-                    <input type="range" min="0" max="100" value="20" data-trait="psicopatia" />
-                </label>
-                <label>
-                    Rígido
-                    <input type="range" min="0" max="100" value="20" data-trait="rigido" />
-                </label>
+        <main class="app-main">
+            <section class="panel panel-body">
+                <h2>Avatar</h2>
+                <div class="body-wrapper">
+                    <div class="body-shadow"></div>
+
+                    <div id="character-body" class="character-body">
+                        <div class="body-head">
+                            <div class="face">
+                                <div class="eyes-row">
+                                    <div class="eye eye-left"></div>
+                                    <div class="eye eye-right"></div>
+                                </div>
+                                <div class="mouth"></div>
+                            </div>
+                        </div>
+
+                        <div class="body-neck"></div>
+
+                        <div class="body-upper">
+                            <div class="body-arm body-arm-left">
+                                <div class="joint joint-elbow"></div>
+                                <div class="arm-muscle"></div>
+                            </div>
+
+                            <div class="body-torso">
+                                <div class="torso-chest-line"></div>
+                                <div class="torso-abs">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <div class="torso-belly"></div>
+                            </div>
+
+                            <div class="body-arm body-arm-right">
+                                <div class="joint joint-elbow"></div>
+                                <div class="arm-muscle"></div>
+                            </div>
+                        </div>
+
+                        <div class="body-hips"></div>
+                        <div class="body-legs">
+                            <div class="leg leg-left">
+                                <div class="joint joint-knee"></div>
+                            </div>
+                            <div class="leg leg-right">
+                                <div class="joint joint-knee"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="body-hint">
+                    <strong>Oral</strong>: tronco bem obeso e arredondado, quadril mais discreto. Na arte emocional representa a busca por acolhimento, contato, prazeres sensoriais e “nutrição” afetiva.
+                    <br />
+                    <strong>Esquizoide</strong>: corpo alto, estreito, com ombros retraídos. Simboliza o afastamento de situações invasivas, proteção do mundo interno, criatividade e foco no pensamento.
+                    <br />
+                    <strong>Masoquista</strong>: tronco largo, blocado e pesado, com base forte. Expressa emoção contida, tendência a suportar cargas, engolir frustrações e segurar a energia para não explodir.
+                    <br />
+                    <strong>Psicopatia</strong>: peito aberto, ombros em V e cabeça mais triangular. Na arte emocional aparece como postura de comando, controle, sedução e necessidade de liderar o cenário.
+                    <br />
+                    <strong>Rígido</strong>: corpo alinhado, definido e proporcional, com cintura marcada e leve efeito “violão”. Traduz o desejo de performance, estética, perfeccionismo e medo de ser trocado ou rejeição ou fracasso.
+                </p>
             </section>
 
-            <section class="preview">
-                <h2>Avatar (placeholder)</h2>
-                <div class="avatar"></div>
-                <p id="profile-summary">Perfil geral: 20% para cada traço.</p>
+                        <section class="panel panel-sliders">
+                <div class="panel-header-row">
+                    <h2>Traços de Personalidade</h2>
+                    <button id="btn-reset" class="icon-btn icon-reset" title="Resetar traços para o padrão (20%% cada)">
+                        ⟳
+                    </button>
+                </div>
+
+                <div class="trait-row">
+                    <div class="trait-label">
+                        <span>Oral</span>
+                        <span id="oral-percent" class="trait-percent">20%%</span>
+                    </div>
+                    <input id="oral-slider" class="trait-slider" type="range" min="0" max="100" value="20" />
+                </div>
+
+                <div class="trait-row">
+                    <div class="trait-label">
+                        <span>Esquizoide</span>
+                        <span id="esquizoide-percent" class="trait-percent">20%%</span>
+                    </div>
+                    <input id="esquizoide-slider" class="trait-slider" type="range" min="0" max="100" value="20" />
+                </div>
+
+                <div class="trait-row">
+                    <div class="trait-label">
+                        <span>Masoquista</span>
+                        <span id="masoquista-percent" class="trait-percent">20%%</span>
+                    </div>
+                    <input id="masoquista-slider" class="trait-slider" type="range" min="0" max="100" value="20" />
+                </div>
+
+                <div class="trait-row">
+                    <div class="trait-label">
+                        <span>Psicopatia</span>
+                        <span id="psicopatia-percent" class="trait-percent">20%%</span>
+                    </div>
+                    <input id="psicopatia-slider" class="trait-slider" type="range" min="0" max="100" value="20" />
+                </div>
+
+                <div class="trait-row">
+                    <div class="trait-label">
+                        <span>Rígido</span>
+                        <span id="rigido-percent" class="trait-percent">20%%</span>
+                    </div>
+                    <input id="rigido-slider" class="trait-slider" type="range" min="0" max="100" value="20" />
+                </div>
+
+                <p id="profile-summary" class="profile-summary">
+                    Perfil geral: 20%% Oral / 20%% Esquizoide / 20%% Masoquista / 20%% Psicopatia / 20%% Rígido
+                </p>
+
+                <div class="buttons-row">
+                    <button id="btn-random" class="btn btn-random">Randomizar</button>
+                    <button id="btn-save-png" class="btn btn-save-png">Salvar imagem</button>
+                    <button id="btn-save-pdf" class="btn btn-save-pdf">Salvar PDF</button>
+                </div>
+            
+                
+                <div class="quiz-config">
+                    <h3 class="quiz-title">Questionário de traços</h3>
+                    <p class="quiz-intro">
+                        Se preferir, você pode estimar automaticamente os percentuais de cada traço
+                        respondendo um questionário.
+                    </p>
+                    <div class="quiz-config-row">
+                        <label for="quiz-length">Quantidade de perguntas:</label>
+                        <select id="quiz-length">
+                            <option value="10">10 perguntas (rápido)</option>
+                            <option value="20">20 perguntas (equilibrado)</option>
+                            <option value="50">50 perguntas (detalhado)</option>
+                        </select>
+                    </div>
+                    <button id="btn-start-quiz" class="btn btn-primary btn-quiz-start">
+                        Iniciar teste de traços
+                    </button>
+
+                    <div id="quiz-area" class="quiz-area hidden">
+                        <div id="quiz-progress" class="quiz-progress"></div>
+                        <div id="quiz-trait-label" class="quiz-trait-tag"></div>
+                        <p id="quiz-question-text" class="quiz-question-text"></p>
+                        <div id="quiz-options" class="quiz-options"></div>
+                    </div>
+
+                    <p id="quiz-result-text" class="quiz-result-text">
+                        O resultado do teste será traduzido em percentuais para cada traço
+                        (Oral, Esquizoide, Masoquista, Psicopatia e Rígido). Esses valores são
+                        normalizados para somar 100% e o avatar é redesenhado para representar
+                        visualmente o seu “DNA de traços”.
+                    </p>
             </section>
-        </main>
+                
+    </main>
+            <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Contato</h2>
+                <p><strong>Nome:</strong> Nicholas Birochi</p>
+                <p><strong>Celular:</strong> +55 (11) 95827-5250</p>
+                <p><strong>Email:</strong> <a href="mailto:nicholas.birochi@gmail.com">nicholas.birochi@gmail.com</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/nicholasbirochi" target="_blank" rel="noreferrer">github.com/nicholasbirochi</a></p>
+                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/nicholas-birochi" target="_blank" rel="noreferrer">linkedin.com/in/nicholas-birochi</a></p>
+                <p><strong>Rocketseat:</strong> <a href="https://app.rocketseat.com.br/me/nicholas-birochi-1501" target="_blank" rel="noreferrer">app.rocketseat.com.br/me/nicholas-birochi-1501</a></p>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-right">
+                <h2>Sobre</h2>
+                <p>Protótipo conceitual que explora, de forma lúdica e não clínica, a relação entre traços de caráter, morfologia corporal e expressão emocional no avatar. A proposta é ajudar em reflexões
+                    pessoais e estudos sobre perfis de comportamento, sem substituir nenhum tipo de avaliação psicológica.</p>
+                </br>
+                <small>Desenvolvido por Nicholas Birochi · Data Analytics · São Bernardo do Campo, SP · Brasil</small>
+            </div>
+        </div>
+    </footer>
     </div>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
     <script src="script.js"></script>
 </body>
 </html>
