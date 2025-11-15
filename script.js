@@ -680,11 +680,414 @@ function applyFacialExpression() {
     });
 }
 
+function randomizeTraits() {
+    traits.oral = Math.random() * 100;
+    traits.esquizoide = Math.random() * 100;
+    traits.masoquista = Math.random() * 100;
+    traits.psicopatia = Math.random() * 100;
+    traits.rigido = Math.random() * 100;
+
+    normalizeTraits();
+    applyTraitsToUI();
+    applyTraitsToBody();
+}
+
+function resetTraits() {
+    traits.oral =
+        traits.esquizoide =
+        traits.masoquista =
+        traits.psicopatia =
+        traits.rigido =
+            20;
+    applyTraitsToUI();
+    applyTraitsToBody();
+}
+
+/**
+ * Captura visual do painel completo para exportar como imagem/PDF.
+ * Aqui usamos o container principal `.app`, que inclui avatar, sliders,
+ * resumo de perfil, questionário e rodapé explicativo.
+ */
+
+/* =========================================================
+ * QUESTIONÁRIO DE TRAÇOS (Likert 1–5)
+ * =======================================================*/
+
+/**
+ * Cada pergunta aponta mais forte para 1 ou 2 traços.
+ * As respostas vão de 1 (Discordo totalmente) a 5 (Concordo totalmente)
+ * e são multiplicadas pelos pesos de cada traço. No final,
+ * normalizamos os resultados para gerar um percentual para
+ * Oral, Esquizoide, Masoquista, Psicopatia e Rígido.
+ */
+
+function buildQuestionBank() {
+    const items = [];
+
+    /**
+     * Para evitar que a pessoa "adivinhe" qual traço está sendo medido,
+     * as perguntas abaixo usam situações do dia a dia sem citar nomes
+     * de traços ou termos muito técnicos.
+     */
+
+    function addTraitQuestions(traitKey, texts) {
+        texts.forEach((text, index) => {
+            items.push({
+                id: `${traitKey}-${index + 1}`,
+                traitKey,
+                text,
+            });
+        });
+    }
+
+    // Perguntas voltadas ao traço Oral (acolhimento e proximidade)
+    addTraitQuestions("oral", [
+        "Costumo me sentir melhor quando posso conversar abertamente com alguém sobre o que estou vivendo.",
+        "Em dias difíceis, busco companhia, mensagens ou chamadas de vídeo para me sentir mais em paz.",
+        "Gosto bastante de momentos simples de convivência, como tomar um café e jogar conversa fora.",
+        "Quando algo bom acontece, tenho vontade de compartilhar rapidamente com alguém próximo.",
+        "Sinto que o clima afetivo de um lugar (acolhimento, receptividade) influencia muito meu bem-estar.",
+        "Fico um pouco incomodado(a) quando percebo que alguém importante para mim está distante ou mais frio(a).",
+        "Tenho facilidade em demonstrar carinho por gestos, palavras ou pequenas gentilezas.",
+        "Percebo que ambientes mais calorosos e descontraídos me ajudam a relaxar e a ser eu mesmo(a).",
+        "Geralmente noto se as pessoas ao meu redor estão confortáveis ou à vontade e isso importa para mim.",
+        "Em festas ou reuniões, valorizo mais o papo gostoso do que a programação em si."
+    ]);
+
+    // Perguntas voltadas ao traço Esquizoide (reserva e espaço pessoal)
+    addTraitQuestions("esquizoide", [
+        "Ter momentos sozinho(a), pensando ou fazendo algo em silêncio, é essencial para eu me recompor.",
+        "Depois de muitas interações sociais, sinto vontade de me afastar um pouco para organizar minhas ideias.",
+        "Frequentemente observo mais do que participo ativamente das conversas em grupo.",
+        "Tenho a sensação de que meu mundo interno (pensamentos, imaginações) é bem rico e ocupado.",
+        "Gosto de mergulhar em atividades solitárias, como ler, estudar ou explorar algum interesse específico.",
+        "Às vezes demoro um pouco para confiar e me abrir emocionalmente com pessoas novas.",
+        "Costumo precisar de tempo para processar o que sinto antes de colocar em palavras.",
+        "Em encontros sociais, por vezes prefiro ficar em um cantinho mais tranquilo em vez de estar no centro da atenção.",
+        "Não sinto necessidade de estar o tempo todo enviando mensagens ou interagindo para manter um vínculo.",
+        "Com certa frequência, me pego “viajando” em pensamentos, mesmo estando acompanhado(a)."
+    ]);
+
+    // Perguntas voltadas ao traço Masoquista (resiliência e contenção)
+    addTraitQuestions("masoquista", [
+        "Costumo assumir muitas responsabilidades, mesmo quando já estou com a agenda cheia.",
+        "Em várias situações, acabo dizendo “sim” para não desapontar os outros, mesmo estando cansado(a).",
+        "Tenho facilidade em perceber as necessidades alheias e, às vezes, deixo as minhas para depois.",
+        "Muitas vezes seguro um desconforto ou chateação para não criar conflito no momento.",
+        "É comum que eu vá até o fim em tarefas difíceis, mesmo quando sinto vontade de desistir.",
+        "Às vezes me pego pensando que aguento mais do que deveria em certas relações ou contextos.",
+        "Tenho tendência a me sentir responsável pelo clima e pela harmonia de um ambiente.",
+        "Quando algo me incomoda, posso demorar para expressar, esperando o “momento certo”.",
+        "Mesmo cansado(a), ainda assim busco cumprir o que me comprometi a fazer.",
+        "É relativamente comum eu colocar o bem-estar de outras pessoas antes do meu, ao tomar decisões."
+    ]);
+
+    // Perguntas voltadas ao traço Psicopatia (estratégia e condução de cenários)
+    addTraitQuestions("psicopatia", [
+        "Em conversas importantes, reparo facilmente nas entrelinhas e em como as pessoas se posicionam.",
+        "Geralmente percebo qual abordagem ajuda mais a convencer alguém de uma ideia.",
+        "Em situações de grupo, é natural que eu acabe assumindo um papel de condução ou direção.",
+        "Costumo planejar alguns passos à frente quando preciso tomar decisões relevantes.",
+        "Tenho certa facilidade para adaptar meu jeito de falar conforme a pessoa com quem estou.",
+        "Em negociações, presto atenção na troca implícita de interesses, não só no que é dito.",
+        "Quando entro em um ambiente novo, rapidamente avalio quem influencia mais as decisões ali.",
+        "Muitas vezes eu noto oportunidades de liderar ou organizar algo antes que os outros percebam.",
+        "Em contextos de incerteza, consigo manter a cabeça mais fria para pensar estrategicamente.",
+        "Frequentemente penso em quais caminhos podem me dar mais margem de manobra em uma situação."
+    ]);
+
+    // Perguntas voltadas ao traço Rígido (padrão, estética e desempenho)
+    addTraitQuestions("rigido", [
+        "Costumo me dedicar bastante para entregar algo bem feito, mesmo em tarefas simples.",
+        "Fico incomodado(a) quando sinto que fiz algo “mais ou menos” e não no padrão que eu gostaria.",
+        "Antes de tomar decisões importantes, avalio bastante o impacto sobre minha imagem ou reputação.",
+        "Em geral, tenho facilidade em perceber detalhes que estão fora do lugar em apresentações, trabalhos ou ambientes.",
+        "É comum eu revisar o que fiz para ter certeza de que está dentro do nível que considero aceitável.",
+        "Críticas mexem comigo e, mesmo quando construtivas, posso ficar repassando o que foi dito depois.",
+        "Gosto quando as coisas têm certa harmonia visual ou organizacional, não apenas funcional.",
+        "Planejo com frequência como posso melhorar meu desempenho em áreas que considero importantes.",
+        "Quando vou me expor em público (trabalho, apresentações, redes sociais), penso bastante em como isso será visto.",
+        "Às vezes sinto dificuldade em relaxar totalmente se percebo que ainda há algo a “aperfeiçoar” em um projeto."
+    ]);
+
+    return items;
+}
+
+const FULL_QUESTION_BANK = buildQuestionBank();
+
+// Estado corrente do questionário
+let quizState = {
+    questions: [],
+    index: 0,
+    answers: {}, // Respostas por pergunta (0 a 4)
+};
+
+function shuffleArray(arr) {
+    const copy = arr.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+function startQuiz(length) {
+    if (!quizArea) return;
+
+    const total = Math.max(1, Math.min(length, FULL_QUESTION_BANK.length));
+    const shuffled = shuffleArray(FULL_QUESTION_BANK);
+    const selected = shuffled.slice(0, total);
+
+    quizState = {
+        questions: selected,
+        index: 0,
+        answers: {},
+    };
+
+    quizArea.classList.remove("hidden");
+    renderCurrentQuestion();
+
+    if (quizResultText) {
+        quizResultText.textContent =
+            "Responda às perguntas abaixo. Ao final, o avatar será atualizado com os percentuais calculados.";
+    }
+}
+
+function renderCurrentQuestion() {
+    if (!quizArea || !quizQuestionText || !quizOptions || !quizProgress || !quizTraitLabel) return;
+    if (!quizState.questions.length) {
+        quizArea.classList.add("hidden");
+        return;
+    }
+
+    const q = quizState.questions[quizState.index];
+    const total = quizState.questions.length;
+
+    quizProgress.textContent = `Pergunta ${quizState.index + 1} de ${total}`;
+    quizTraitLabel.textContent = ``;
+    quizQuestionText.textContent = q.text;
+
+    quizOptions.innerHTML = "";
+
+    const labels = [
+        "Discordo totalmente",
+        "Discordo",
+        "Neutro",
+        "Concordo",
+        "Concordo totalmente",
+    ];
+
+    labels.forEach((label, value) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "quiz-option-btn";
+        btn.textContent = label;
+
+        const currentValue = quizState.answers[q.id];
+        if (currentValue === value) {
+            btn.classList.add("selected");
+        }
+
+        btn.addEventListener("click", () => {
+            handleQuizAnswer(value);
+        });
+
+        quizOptions.appendChild(btn);
+    });
+}
+
+function handleQuizAnswer(value) {
+    if (!quizState.questions.length) return;
+
+    const q = quizState.questions[quizState.index];
+    quizState.answers[q.id] = value;
+
+    const lastIndex = quizState.questions.length - 1;
+    if (quizState.index < lastIndex) {
+        quizState.index += 1;
+        renderCurrentQuestion();
+    } else {
+        finishQuiz();
+    }
+}
+
+function finishQuiz() {
+    const scores = {
+        oral: 0,
+        esquizoide: 0,
+        masoquista: 0,
+        psicopatia: 0,
+        rigido: 0,
+    };
+    const counts = {
+        oral: 0,
+        esquizoide: 0,
+        masoquista: 0,
+        psicopatia: 0,
+        rigido: 0,
+    };
+
+    // Agrega respostas
+    quizState.questions.forEach((q) => {
+        let v = quizState.answers[q.id];
+        if (typeof v !== "number") {
+            v = 2; // Valor neutro caso a pergunta tenha sido pulada
+        }
+        scores[q.traitKey] += v;
+        counts[q.traitKey] += 1;
+    });
+
+    // Converte em percentual relativo (normalizado para 100%)
+    const raw = {};
+    let totalRaw = 0;
+
+    TRAITS_KEYS.forEach((key) => {
+        const c = counts[key] || 1;
+        const avg = scores[key] / (4 * c); // Valor médio entre 0 e 1
+        const val = avg * 100;
+        raw[key] = val;
+        totalRaw += val;
+    });
+
+    if (totalRaw <= 0) totalRaw = 1;
+
+    TRAITS_KEYS.forEach((key) => {
+        traits[key] = (raw[key] / totalRaw) * 100;
+    });
+
+    applyTraitsToUI();
+    applyTraitsToBody();
+
+    if (quizArea) {
+        quizArea.classList.add("hidden");
+    }
+
+    if (quizResultText) {
+        quizResultText.textContent =
+            `Resultado do teste: ` +
+            `${traits.oral.toFixed(0)}% Oral, ` +
+            `${traits.esquizoide.toFixed(0)}% Esquizoide, ` +
+            `${traits.masoquista.toFixed(0)}% Masoquista, ` +
+            `${traits.psicopatia.toFixed(0)}% Psicopatia e ` +
+            `${traits.rigido.toFixed(0)}% Rígido. ` +
+            `Esses percentuais somam 100% e são usados apenas para desenhar uma representação visual ` +
+            `do seu “DNA de traços”, sem qualquer finalidade diagnóstica.`;
+    }
+}
+
+/**
+ * Liga o botão de início do questionário aos handlers.
+ */
+function setupQuizUI() {
+    if (!quizStartButton || !quizLengthSelect) return;
+
+    quizStartButton.addEventListener("click", () => {
+        const length = parseInt(quizLengthSelect.value, 10) || 10;
+        startQuiz(length);
+    });
+}
+
+
+async function captureAppCanvas() {
+    const root = document.querySelector(".app");
+    if (!root) {
+        alert("Não foi possível localizar o painel para exportação.");
+        return null;
+    }
+    if (typeof html2canvas === "undefined") {
+        alert("Biblioteca de captura (html2canvas) não carregada.");
+        return null;
+    }
+
+    // Captura em alta resolução (scale 2) e fundo escuro coerente com o layout
+    const canvas = await html2canvas(root, {
+        backgroundColor: "#020617",
+        scale: 2,
+    });
+    return canvas;
+}
+
+/**
+ * Salvar como imagem (PNG)
+ */
+async function handleSaveImage() {
+    const canvas = await captureAppCanvas();
+    if (!canvas) return;
+
+    const dataUrl = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "dna_tracos_avatar.png";
+    link.click();
+}
+
+/**
+ * Salvar como PDF (botão em vermelho)
+ */
+async function handleSavePdf() {
+    const canvas = await captureAppCanvas();
+    if (!canvas) return;
+
+    const imgData = canvas.toDataURL("image/png");
+
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+        alert("Biblioteca de PDF (jsPDF) não carregada.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+
+    // Formato baseado no tamanho do canvas capturado
+    const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "px",
+        format: [canvas.width, canvas.height],
+    });
+
+    pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+    pdf.save("dna_tracos_avatar.pdf");
+}
+
+function confirmCharacter() {
+    const text =
+        `Seu personagem foi confirmado com o seguinte DNA de traços:\n` +
+        `- Oral: ${traits.oral.toFixed(1)}%\n` +
+        `- Esquizoide: ${traits.esquizoide.toFixed(1)}%\n` +
+        `- Masoquista: ${traits.masoquista.toFixed(1)}%\n` +
+        `- Psicopatia: ${traits.psicopatia.toFixed(1)}%\n` +
+        `- Rígido: ${traits.rigido.toFixed(1)}%`;
+
+    alert(text);
+    console.log("[DNA de Traços] Personagem confirmado:", traits);
+}
 
 function init() {
+    // Sliders de traços
     Object.values(sliders).forEach((slider) => {
         slider.addEventListener("input", updateFromSliders);
     });
+
+    // Botões principais
+    const btnRandom = document.getElementById("btn-random");
+    const btnReset = document.getElementById("btn-reset");
+    const btnSavePng = document.getElementById("btn-save-png");
+    const btnSavePdf = document.getElementById("btn-save-pdf");
+
+    if (btnRandom) {
+        btnRandom.addEventListener("click", randomizeTraits);
+    }
+    if (btnReset) {
+        btnReset.addEventListener("click", resetTraits);
+    }
+    if (btnSavePng) {
+        btnSavePng.addEventListener("click", handleSaveImage);
+    }
+    if (btnSavePdf) {
+        btnSavePdf.addEventListener("click", handleSavePdf);
+    }
+
+    // Questionário de traços
+    setupQuizUI();
 
     normalizeTraits();
     applyTraitsToUI();
