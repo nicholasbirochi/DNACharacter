@@ -1,6 +1,6 @@
 # 🌌 DNA de Traços do Corpo – Avatar Paramétrico V23
 
-Protótipo web que transforma cinco traços de caráter (Oral, Esquizoide, Masoquista, Psicopatia e Rígido) em um avatar 2D paramétrico. O objetivo é demonstrar, de maneira lúdica e visual, como diferentes intensidades desses traços podem alterar a morfologia corporal, a postura e a “expressão energética” do personagem.
+Experimento visual que transforma os valores de cinco controles em um avatar 2D. O objetivo é explorar proporções e combinações de forma lúdica; trata-se de um protótipo conceitual, sem finalidade de diagnóstico ou avaliação de pessoas.
 
 > Projeto configurado para o portfólio de **Nicholas Birochi** (Data Analytics & Automation). Uso livre para fins de estudo e demonstração, desde que citado como protótipo conceitual.
 
@@ -86,8 +86,7 @@ Os efeitos podem se combinar (ex.: Oral + Rígido → tronco arredondado com pos
 - **HTML5** (`index.html`): layout principal (avatar, sliders, questionário, contato).  
 - **CSS3** (`style.css`): tema, responsividade, grid principal, efeitos visuais do avatar.  
 - **JavaScript** (`script.js`): normalização dos traços, deformação corporal, exportação, questionário.  
-- **README.md**: documentação principal (este arquivo).  
-- **COMMIT_HISTORY.md**: narrativa simulada de commits sugeridos para quem quiser iniciar um repositório Git a partir deste protótipo.
+- **readme.md**: documentação principal (este arquivo).  
 
 Não há frameworks, bundlers ou dependências externas além das libs CDN para exportação.
 
@@ -96,7 +95,7 @@ Não há frameworks, bundlers ou dependências externas além das libs CDN para 
 ## 💻 Como executar localmente
 
 1. Faça download ou clone os arquivos deste diretório.  
-2. Certifique-se de manter `index.html`, `style.css`, `script.js`, `README.md` e `COMMIT_HISTORY.md` na mesma pasta.  
+2. Certifique-se de manter `index.html`, `style.css`, `script.js` e `readme.md` na mesma pasta.  
 3. Dê duplo clique em `index.html` (ou arraste para o navegador).  
 4. Use os sliders para modificar os traços e acompanhar as mudanças do avatar.  
 5. Se quiser exportar, permita pop-ups para que navegador baixe o PNG/PDF.
@@ -135,3 +134,7 @@ Não há frameworks, bundlers ou dependências externas além das libs CDN para 
 - **E‑mail:** [nicholas.birochi@gmail.com](mailto:nicholas.birochi@gmail.com)
 
 > Este projeto nasceu como vitrine para o portfólio pessoal. Caso reutilize, cite o protótipo original e mantenha o caráter experimental/lúdico da aplicação.
+
+## Licença
+
+Uso para estudo e demonstração, com atribuição ao protótipo conceitual, conforme [license](license).
