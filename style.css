@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    margin: 0;
+    padding: 24px;
+}
+
+.app {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 24px;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.sliders label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.preview {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.avatar {
+    width: 180px;
+    height: 220px;
+    margin: 16px auto;
+    background: rgba(56, 189, 248, 0.3);
+    border-radius: 12px;
+}
